@@ -1,0 +1,92 @@
+
+.form-check-input[type="radio"] {
+    transform: scale(1.2);
+    margin-right: 8px;
+}
+
+.form-check-label {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.form-check-input:checked + .form-check-label {
+    background-color: #f8f9fa;
+    box-shadow: 0 0 0 2px #0d6efd;
+}
+
+#recipientFields {
+    border-left: 3px solid #0d6efd;
+    padding-left: 1rem;
+    margin-top: 1rem;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.card-title { font-weight: 500; }
+.small { font-size: 0.9em; }
+.bi { vertical-align: -0.125em; }
+
+.order-list-card {
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.2s;
+}
+
+.order-list-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-meta {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+.status-badge {
+    font-size: 0.85em;
+    padding: 4px 8px;
+    border-radius: 12px;
+}
+
+.status-completed { background-color: #d4edda; color: #155724; }
+.status-pending { background-color: #fff3cd; color: #856404; }
+.status-processing { background-color: #cce5ff; color: #004085; }
+.status-cancelled { background-color: #f8d7da; color: #721c24; }

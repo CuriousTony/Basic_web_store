@@ -1,0 +1,211 @@
+<style>
+    .card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 5%;
+    }
+
+    .card-img-top {
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .badge {
+        font-size: 0.9rem;
+        padding: 0.5em 0.75em;
+    }
+
+    .btn-outline-primary {
+        border-width: 2px;
+    }
+
+    footer {
+    background-color: #2d2d2d !important;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    z-index: 100;
+    }
+
+    footer a:hover {
+        color: #e0e0e0 !important;
+        text-decoration: underline !important;
+    }
+
+    footer .col-md-6 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    }
+
+    footer .nav-section {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 1rem;
+    }
+
+    .navbar {
+        background-color: #2d2d2d !important;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        min-height: 80px;
+        padding: 0 1rem;
+    }
+
+    .navbar-brand {
+        height: 80px;
+        padding: 0 !important;
+        display: flex;
+        align-items: center;
+        max-width: 30%;
+        margin-right: auto;
+    }
+
+    .navbar-brand img {
+        height: 60px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .navbar-brand span {
+        color: white;
+        font-size: 1.25rem;
+        margin-left: 15px;
+        white-space: nowrap;
+    }
+
+    .navbar-collapse {
+        flex-grow: 0 !important;
+        align-items: center;
+    }
+
+    .navbar-nav {
+        flex-direction: row !important;
+    }
+
+    .header-auth-buttons {
+        margin-left: 2rem;
+    }
+
+    .card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .list-group-item {
+        transition: background-color 0.3s;
+    }
+
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+
+    .lead {
+        font-size: 1.25rem;
+        line-height: 1.6;
+    }
+
+    /* Фиксированные элементы внизу карточки */
+    .fixed-bottom-block {
+        margin-top: auto;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+    }
+
+    /* Многострочное обрезание текста */
+    .text-truncate-3-lines {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.4;
+    }
+
+    .small {
+        font-size: 0.85rem;
+    }
+
+    /* Анимация карточки */
+    .hover-effect {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .hover-effect:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    input[data-inputmask] {
+        font-family: monospace;
+        letter-spacing: 0.1em;
+    }
+
+    #cartModal .modal-dialog {
+        width: 30vw;
+        min-width: 300px;
+        max-width: 90%;
+    }
+
+    #cartModal .modal-content {
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    #cartModal img {
+        object-fit: cover;
+        width: 100%;
+    }
+
+    #cartModal {
+        z-index: 1060; /* Стандартный z-index для Bootstrap модалок + 10 */
+    }
+
+    .modal-backdrop {
+        z-index: 1050; /* Стандартное значение */
+    }
+
+    /* Фиксированная высота карточек */
+    @media (min-width: 768px) {
+        .card {
+            min-height: 450px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        footer .nav-section {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        footer .align-self-end {
+            margin-top: 1.5rem !important;
+        }
+
+        .navbar-brand {
+        max-width: 50%;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+        }
+
+        .navbar-nav {
+            gap: 0.5rem !important;
+        }
+    }
+</style>

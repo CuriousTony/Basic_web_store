@@ -1,0 +1,57 @@
+{% load static %}
+
+<header class="navbar navbar-expand-lg navbar-dark mb-2" style="background-color: #2d2d2d !important;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'main:home' %}" style="width: 250px;">
+            <img src="{% static 'main/img/logo_black.png' %}"
+                 alt="Логотип"
+                 class="d-inline-block">
+            <span class="ms-2">Цветочная Палитра</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'main:home' %}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:about' %}">О нас</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:payment' %}">Оплата и доставка</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'reviews:reviews' %}">Отзывы</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'orders:order_list' %}">Мои заказы</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart:cart_detail' %}">
+                        Корзина
+                        <span class="cart-counter">
+                            {% if cart %}{{ cart.items_count }}{% endif %}
+                        </span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="d-flex header-auth-buttons">
+                {% if user.is_authenticated %}
+                    <form action="{% url 'users:logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-light me-2">Выход</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'users:signin' %}?next={{ request.path }}" class="btn btn-outline-light me-2">Вход</a>
+                    <a href="{% url 'users:signup' %}" class="btn btn-light">Регистрация</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>

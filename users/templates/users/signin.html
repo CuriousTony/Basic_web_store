@@ -1,0 +1,50 @@
+{% extends 'main/layout.html' %}
+{% block title %}Авторизация{% endblock %}
+
+{% block content %}
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Номер телефона</label>
+                <input
+                    type="tel"
+                    name="username"
+                    class="form-control"
+                    id="id_username"
+                    required
+                    placeholder="+7 (999)1234567"
+                    data-inputmask="'mask': '+7 (999) 999-99-99'"
+                    value="{{ form.username.value|default:'' }}"
+                >
+        </div>
+
+        <div class="mb-3">
+            <label for="id_password" class="form-label">Пароль</label>
+            <input
+                type="password"
+                name="password"
+                class="form-control"
+                id="id_password"
+                required
+            >
+        </div>
+
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {% if form.non_field_errors %}
+                    Неверный телефон или пароль
+                {% else %}
+                    Исправьте ошибки в форме
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Войти</button>
+            <a href="{% url 'users:signup' %}" class="btn btn-outline-secondary">
+                Ещё нет аккаунта? Зарегистрироваться
+            </a>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,139 @@
+/* Контейнер карточки */
+.review-card {
+    border-radius: 15px;
+    overflow: hidden;
+    height: 550px;
+    padding-bottom: 30px;
+}
+
+/* Изображение букета */
+.bouquet-preview-container {
+    position: relative;
+    height: 100%;
+}
+
+form {
+    padding-bottom: 25px;
+}
+
+.bouquet-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bouquet-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    background: linear-gradient(transparent 0%, rgba(0,0,0,0.8) 100%);
+    color: white;
+}
+
+.bouquet-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.bouquet-composition {
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* Звезды рейтинга */
+.rating-stars {
+    font-size: 1.8rem;
+    color: #e0e0e0;
+    cursor: pointer;
+}
+
+.rating-star:hover,
+.rating-star.active {
+    color: #ffc107 !important;
+}
+
+.btn-primary {
+    position: relative;
+    top: -30px;
+    transform: translateY(-10px);
+}
+
+/* Гарантия видимости кнопки */
+.reviews-container .review-submit-btn {
+    position: relative;
+    top: -45px;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+/* Настройки для контейнеров reviews.html */
+.reviews-container {
+    max-width: 750px;
+    margin: 0 auto;
+}
+.reviews-review-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+    max-height: 300px;
+}
+
+.review-card:hover {
+    transform: translateY(-3px);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #2d2d2d;
+}
+
+.review-date {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.bouquet-info {
+    font-size: 0.9rem;
+    color: #7f8fa6;
+}
+
+.review-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #444;
+    white-space: pre-line;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+}
+
+.rating-stars {
+    font-size: 1.2rem;
+}
+
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .review-card {
+        height: auto;
+    }
+
+    .bouquet-preview-container {
+        height: 300px;
+    }
+}

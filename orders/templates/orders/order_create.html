@@ -1,0 +1,260 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'orders/css/styles.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Оформление заказа</h2>
+
+            <form method="post" id="orderForm">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                  <div class="alert alert-danger">
+                    {% for error in form.non_field_errors %}
+                      <p>{{ error }}</p>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                <!-- Способ получения -->
+                <div class="row g-3 mb-4 text-center">
+                    <div class="col-6">
+                        <div class="form-check form-check-inline h-100">
+                            <input class="form-check-input" type="radio" name="delivery_type"
+                                   id="delivery_type_0" value="delivery" checked>
+                            <label class="form-check-label d-block" for="delivery_type_0">
+                                <i class="bi bi-truck fs-2"></i><br>
+                                Доставка
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-check form-check-inline h-100">
+                            <input class="form-check-input" type="radio" name="delivery_type"
+                                   id="delivery_type_1" value="pickup">
+                            <label class="form-check-label d-block" for="delivery_type_1">
+                                <i class="bi bi-shop fs-2"></i><br>
+                                Самовывоз
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Основные данные -->
+                <div class="mb-3">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Имя заказчика</label>
+            <input type="text" class="form-control" id="id_user_name" name="user_name" value="{{ request.user.name }}" {% if request.user.is_authenticated %}readonly{% endif %}>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Телефон заказчика</label>
+            <input type="text" class="form-control" id="id_user_phone" name="user_phone" value="{{ request.user.phone }}" {% if request.user.is_authenticated %}readonly{% endif %}>
+        </div>
+    </div>
+</div>
+
+                <!-- Чекбокс получателя -->
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="id_is_recipient_me" name="is_recipient_me" checked>
+                    <label class="form-check-label" for="id_is_recipient_me">Получатель, это я</label>
+                </div>
+
+                <!-- Дополнительные поля (скрыты по умолчанию) -->
+                <div id="recipientFields" class="mb-3" style="display: none;">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Имя получателя</label>
+                            <input type="text" class="form-control" id="id_recipient_name" name="recipient_name" value="{{ recipient.name }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Телефон получателя</label>
+                            <input type="text" class="form-control" id="id_recipient_phone" name="recipient_phone" value="{{ recipient.phone }}">
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="recipient_name" id="recipient-name-hidden" />
+                <input type="hidden" name="recipient_phone" id="recipient-phone-hidden" />
+                <!-- Блок доставки -->
+                <div id="deliveryInfo">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Адрес доставки</label>
+                            {{ form.delivery_address }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Дата и время</label>
+                            {{ form.delivery_date }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        Продолжить <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="selfPickupModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="selfPickupModalClose">&times;</span>
+        <h4>Самовывоз</h4>
+        <p>Вы можете оплатить заказ в магазине по адресу Санкт-Петербург, Лиговский пр., 99 наличными, или нажать кнопку "Продолжить" для оплаты на сайте.</p>
+        <button id="selfPickupModalConfirm" class="btn btn-success">Я понял</button>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const deliveryAddressInput = document.getElementById('id_delivery_address');
+    const deliveryDateInput = document.getElementById('id_delivery_date');
+    const allowedKeywords = ['санкт-петербург', 'спб', 'с-пб'];
+
+    // Блок управления видимостью полей получателя
+    const deliveryTypeRadios = document.querySelectorAll('input[name="delivery_type"]');
+    const recipientFields = document.getElementById('recipientFields');
+    const deliveryInfo = document.getElementById('deliveryInfo');
+    const isRecipientCheckbox = document.querySelector('#id_is_recipient_me');
+    const recipientNameInput = document.getElementById('id_recipient_name');
+    const recipientPhoneInput = document.getElementById('id_recipient_phone');
+    const recipientNameHidden = document.getElementById('recipient-name-hidden');
+    const recipientPhoneHidden = document.getElementById('recipient-phone-hidden');
+
+    // Функция обновления формы
+    function updateForm() {
+        const isDelivery = document.querySelector('input[name="delivery_type"]:checked')?.value === 'delivery';
+
+        // Управление видимостью блоков
+        if (deliveryInfo) {
+            deliveryInfo.style.display = isDelivery ? 'block' : 'none';
+        }
+        if (recipientFields) {
+            recipientFields.style.display = (isDelivery && !isRecipientCheckbox.checked) ? 'block' : 'none';
+        }
+
+        // Обновление лейблов для получателя
+        if (isDelivery) {
+            const recipientNameLabel = document.querySelector('label[for="id_recipient_name"]');
+            const recipientPhoneLabel = document.querySelector('label[for="id_recipient_phone"]');
+            if (recipientNameLabel) {
+                recipientNameLabel.textContent = isRecipientCheckbox.checked ? 'Ваше имя' : 'Имя получателя';
+            }
+            if (recipientPhoneLabel) {
+                recipientPhoneLabel.textContent = isRecipientCheckbox.checked ? 'Ваш телефон' : 'Телефон получателя';
+            }
+        }
+
+        // Обновление скрытых полей на основе видимых
+        if (recipientNameInput && recipientPhoneInput && recipientNameHidden && recipientPhoneHidden) {
+            if (isRecipientCheckbox.checked) {
+                // Если флаг "Получатель, это я" активен, очищаем скрытые поля
+                recipientNameHidden.value = '';
+                recipientPhoneHidden.value = '';
+            } else {
+                // Иначе синхронизируем значения видимых и скрытых полей
+                recipientNameHidden.value = recipientNameInput.value;
+                recipientPhoneHidden.value = recipientPhoneInput.value;
+            }
+        }
+    }
+
+    // Назначение обработчиков событий
+    if (deliveryTypeRadios) {
+        deliveryTypeRadios.forEach(radio => radio.addEventListener('change', updateForm));
+    }
+    if (isRecipientCheckbox) {
+        isRecipientCheckbox.addEventListener('change', updateForm);
+    }
+    if (recipientNameInput && recipientPhoneInput) {
+        [recipientNameInput, recipientPhoneInput].forEach(input => {
+            input.addEventListener('input', updateForm);
+        });
+    }
+
+    // Инициализация при загрузке
+    updateForm();
+
+    // Валидация адреса доставки
+    if (deliveryAddressInput) {
+        deliveryAddressInput.addEventListener('input', function() {
+            const address = deliveryAddressInput.value.toLowerCase();
+            if (!allowedKeywords.some(keyword => address.includes(keyword))) {
+                deliveryAddressInput.classList.add('is-invalid');
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'invalid-feedback';
+                errorDiv.textContent = 'На сегодняшний день доставка только в пределах города Санкт-Петербурга.';
+                deliveryAddressInput.parentElement.appendChild(errorDiv);
+            } else {
+                deliveryAddressInput.classList.remove('is-invalid');
+                const errorDiv = deliveryAddressInput.parentElement.querySelector('.invalid-feedback');
+                if (errorDiv) {
+                    errorDiv.remove();
+                }
+            }
+        });
+    }
+
+    // Валидация даты и времени доставки
+    if (deliveryDateInput) {
+        deliveryDateInput.addEventListener('change', function() {
+            const deliveryDateTime = new Date(deliveryDateInput.value);
+            const now = new Date();
+            const minDeliveryTime = new Date(now.getTime() + 2 * 60 * 60 * 1000); // +2 часа
+            const maxDeliveryTime = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000); // +2 недели
+
+            let errorMessage = '';
+            if (deliveryDateTime < now) {
+                errorMessage = 'Дата доставки не может быть в прошлом.';
+            } else if (deliveryDateTime > maxDeliveryTime) {
+                errorMessage = 'Дата доставки не может быть позже, чем через 2 недели.';
+            } else if (deliveryDateTime.getHours() < 9 || deliveryDateTime.getHours() > 21) {
+                errorMessage = 'Время доставки должно быть в промежутке 09:00-21:00.';
+            } else if (deliveryDateTime < minDeliveryTime) {
+                errorMessage = 'Время доставки должно быть не раньше, чем через 2 часа.';
+            }
+
+            if (errorMessage) {
+                deliveryDateInput.classList.add('is-invalid');
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'invalid-feedback';
+                errorDiv.textContent = errorMessage;
+                deliveryDateInput.parentElement.appendChild(errorDiv);
+            } else {
+                deliveryDateInput.classList.remove('is-invalid');
+                const errorDiv = deliveryDateInput.parentElement.querySelector('.invalid-feedback');
+                if (errorDiv) {
+                    errorDiv.remove();
+                }
+            }
+        });
+    }
+
+    // Управление модальным окном для самовывоза
+    const selfPickupModal = document.getElementById('selfPickupModal');
+    const selfPickupModalClose = document.getElementById('selfPickupModalClose');
+    const selfPickupModalConfirm = document.getElementById('selfPickupModalConfirm');
+
+    if (deliveryTypeRadios && selfPickupModal && selfPickupModalClose && selfPickupModalConfirm) {
+        deliveryTypeRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'pickup') {
+                    selfPickupModal.style.display = 'block';
+                }
+            });
+        });
+
+        selfPickupModalClose.addEventListener('click', function() {
+            selfPickupModal.style.display = 'none';
+        });
+
+        selfPickupModalConfirm.addEventListener('click', function() {
+            selfPickupModal.style.display = 'none';
+        });
+    }
+});
+</script>
+{% endblock %}

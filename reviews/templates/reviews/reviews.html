@@ -1,0 +1,53 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}Отзывы клиентов{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'reviews/css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 text-center">Отзывы наших клиентов</h2>
+
+    {% if reviews %}
+        <div class="reviews-container">
+            {% for review in reviews %}
+                <div class="reviews-review-card">
+                    <!-- Шапка отзыва -->
+                    <div class="review-header">
+                        <div class="user-info">
+                            <span class="user-name">{{ review.user.name|default:review.user.username }}</span>
+                            <span class="review-date">{{ review.created_at|date:"d.m.Y" }}</span>
+                        </div>
+                        {% if review.bouquet %}
+                            <div class="bouquet-info">
+                                Букет: <em>{{ review.bouquet.name }}</em>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Рейтинг -->
+                    <div class="rating-stars mb-3">
+                        {% with ''|center:review.rating as range %}
+                            {% for _ in range %}
+                                <i class="bi bi-star-fill text-warning"></i>
+                            {% endfor %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Текст отзыва -->
+                    <div class="review-text">
+                        {{ review.text }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            Пока нет опубликованных отзывов. Станьте первым!
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

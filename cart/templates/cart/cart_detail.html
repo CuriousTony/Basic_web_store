@@ -1,0 +1,140 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'cart/css/styles.css' %}">
+{% endblock %}
+
+<div class="container py-5 cart-container">
+    <h1 class="mb-4">🛒 Ваша корзина</h1>
+
+    <div class="cart-items">
+        {% for item in cart.items.all %}
+            <div class="cart-item card shadow-sm mb-3">
+                <div class="row g-3 align-items-stretch">
+                    <!-- Изображение -->
+                    <div class="col-md-2 card-img-container">
+                        <img src="{{ item.bouquet.pic1.url }}"
+                             class="img-fluid rounded-start"
+                             alt="{{ item.bouquet.name }}">
+                    </div>
+
+                    <!-- Информация -->
+                    <div class="col-md-8">
+                        <div class="card-body py-2">
+                            <h3 class="cart-item-title">{{ item.bouquet.name }}</h3>
+                            <div class="cart-item-controls">
+                                <div class="quantity-control input-group">
+                                    <button class="btn btn-outline-secondary decrement"
+                                            data-item-id="{{ item.id }}">−</button>
+                                    <input type="number"
+                                           name="quantity_{{ item.id }}"
+                                           value="{{ item.quantity }}"
+                                           class="form-control text-center"
+                                           min="1"
+                                           readonly>
+                                    <button class="btn btn-outline-secondary increment"
+                                            data-item-id="{{ item.id }}">+</button>
+                                </div>
+                                <div class="cart-item-price">
+                                    {{ item.item_total }} ₽
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Удаление -->
+                    <div class="col-md-2 d-flex align-items-center justify-content-end pe-4">
+                        <button class="btn btn-danger btn-sm remove-item"
+                                data-item-id="{{ item.id }}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="empty-cart text-center py-5">
+                <div class="alert alert-info">
+                    Ваша корзина пуста. <a href="{% url 'main:home' %}">Выбрать букеты</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if cart.items.exists %}
+    <div class="cart-summary">
+        <div class="row justify-content-start">
+            <div class="col-lg-3 col-md-6">
+                <div class="summary-card card border-primary shadow">
+                    <div class="card-body">
+                        <h4 class="card-title mb-2">Итого:</h4>
+                        <div class="total-price">
+                            <span>Сумма:</span>
+                            <span class="price">{{ cart.total_price }} ₽</span>
+                        </div>
+                        <a href="{% url 'orders:order_create' %}"
+                           class="btn btn-primary btn-lg w-100 mt-3">
+                            Оформить заказ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Общие настройки
+    const cartContainer = document.querySelector('.cart-container');
+    const csrfToken = "{{ csrf_token }}";
+
+    // Делегирование событий
+    cartContainer.addEventListener('click', async (e) => {
+        const target = e.target.closest('.increment, .decrement, .remove-item');
+        if (!target) return;
+
+        e.preventDefault();
+        const itemId = target.dataset.itemId;
+        const input = target.closest('.quantity-control')?.querySelector('input');
+
+        let newQuantity = input ? parseInt(input.value) : 0;
+
+        if (target.classList.contains('increment')) {
+            input.value = newQuantity + 1;
+            newQuantity = input.value;
+        }
+        else if (target.classList.contains('decrement') && newQuantity > 1) {
+            input.value = newQuantity - 1;
+            newQuantity = input.value;
+        }
+        else if (target.classList.contains('remove-item')) {
+            newQuantity = 0;
+        }
+
+        try {
+            const response = await fetch(`/cart/update/${itemId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({quantity: newQuantity})
+            });
+
+            if (response.ok) {
+                if (newQuantity === 0) {
+                    target.closest('.cart-item').remove();
+                }
+                location.reload();
+            }
+        } catch (error) {
+            console.error('Ошибка обновления корзины:', error);
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,362 @@
+[
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 25 розовых пионов (Премиум) с тиласпией",
+      "consists": "Состав букета: 25 пионов, тиласпия 3, упаковка, лента",
+      "price": 18480.0,
+      "pic1": "bouquets/pion_bouquet_1.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 7 розовых пионов (Премиум) с тиласпией",
+      "consists": "Состав букета: пион 7, тиласпия 2, упаковка, лента",
+      "price": 5964.0,
+      "pic1": "bouquets/pion_bouquet_2.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 15 розовых пионов (Премиум) с матрикарией",
+      "consists": "Состав букета: пион 15, матрикария 4, упаковка, лента",
+      "price": 12075.0,
+      "pic1": "bouquets/pion_bouquet_3.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 11 белых пионов (Премиум) с матрикарией",
+      "consists": "Состав букета: пион 11, матрикария 4, упаковка фоамиран, лента",
+      "price": 9177.0,
+      "pic1": "bouquets/pion_bouquet_4.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет «Розовая глазурь»",
+      "consists": "Состав букета: пион премиум 11, лагурус 15, упаковка, лента",
+      "price": 8547.0,
+      "pic1": "bouquets/pion_bouquet_5.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 9 белых пионов (Премиум)",
+      "consists": "Состав букета: пион 9, упаковка, лента",
+      "price": 6675.0,
+      "pic1": "bouquets/pion_bouquet_6.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 15 белых пионов (Премиум)",
+      "consists": "Состав букета: пион 15, упаковка, лента",
+      "price": 11235.0,
+      "pic1": "bouquets/pion_bouquet_7.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 7 белых пионов (Премиум)",
+      "consists": "Состав букета: пион 7, упаковка, лента",
+      "price": 5439.0,
+      "pic1": "bouquets/pion_bouquet_8.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 21 розового пиона (Премиум)",
+      "consists": "Состав букета: пион 21, упаковка, лента",
+      "price": 15582.0,
+      "pic1": "bouquets/pion_bouquet_9.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 13 розовых пионов (Премиум)",
+      "consists": "пион 13, упаковка, лента",
+      "price": 9786.0,
+      "pic1": "bouquets/pion_bouquet_10.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 3 розовых пионов (Премиум)",
+      "consists": "Состав букета: пион 3, упаковка, лента",
+      "price": 2541.0,
+      "pic1": "bouquets/pion_bouquet_11.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 13 белых пионов (Премиум)",
+      "consists": "Состав букета: пион 13, упаковка, лента",
+      "price": 9786.0,
+      "pic1": "bouquets/pion_bouquet_12.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 3 белых пионов (Премиум)",
+      "consists": "Состав букета: пион 3, упаковка, лента",
+      "price": 2541.0,
+      "pic1": "bouquets/pion_bouquet_13.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 11 белых пионов (Премиум)",
+      "consists": "Состав букета: пион 11, упаковка, лента",
+      "price": 8337.0,
+      "pic1": "bouquets/pion_bouquet_14.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 11 розовых пионов (Премиум)",
+      "consists": "Состав букета: пион 11, упаковка, лента",
+      "price": 8337.0,
+      "pic1": "bouquets/pion_bouquet_15.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 15 розовых пионов (Премиум)",
+      "consists": "Состав букета: пион 15, упаковка, лента",
+      "price": 11235.0,
+      "pic1": "bouquets/pion_bouquet_16.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 25 розовых пионов (Премиум)",
+      "consists": "Состав букета: 25 розовых пионов, упаковка, лента",
+      "price": 18480.0,
+      "pic1": "bouquets/pion_bouquet_17.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 7 розовых пионов (Премиум)",
+      "consists": "Состав букета: пион 7, упаковка, лента",
+      "price": 5439.0,
+      "pic1": "bouquets/pion_bouquet_18.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет невесты из пионов и гвоздики",
+      "consists": "пион 5, гиперикум 3, паппоротник амбрелла 2, гвоздика голландия 7, хлопок 3, лаванда 0,25",
+      "price": 6890.0,
+      "pic1": "bouquets/pion_bouquet_19.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Свадебный букет из пионов, роз и астранции",
+      "consists": "пион 11, роза эквадор 11, астранция 10, гиперикум 3, эвкалипт цинерея 4, лента",
+      "price": 15289.0,
+      "pic1": "bouquets/pion_bouquet_20.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Корзина с пионами «Лесная песня»",
+      "consists": "пион 15, роза вайт охара 15, хризантема экстра 2, эустома 5, маттиола 5, озотамнус 4, папоротник амбрелла 6, эвкалипт парвифолия 2, корзина плетеная (ива), оазис 6",
+      "price": 28765.0,
+      "pic1": "bouquets/pion_bouquet_21.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Корзина с пионами «В саду Эдема»",
+      "consists": "Состав букета: альстромерия 7, вероника 10, гвоздика голландия 3, гортензия 1, лимониум 3, пион премиум 10, эустома 5, роза кустовая мисти бабблс 10, зелень питтоспорум 10, дельфиниум 5, эвкалипт цинерея 2, рускус декоративный 3, корзина плетеная (ива), оазис 12",
+      "price": 29935.0,
+      "pic1": "bouquets/pion_bouquet_22.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 25 белых пионов (Премиум)",
+      "consists": "Состав букета: 25 белых пионов, упаковка, лента",
+      "price": 18480.0,
+      "pic1": "bouquets/pion_bouquet_23.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Пионы коралловые (Премиум)",
+      "consists": "Состав букета: пионы коралловые.",
+      "price": 690.0,
+      "pic1": "bouquets/pion_bouquet_24.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 11 пионов микс (Премиум)",
+      "consists": "Состав букета: пион 11, упаковка, лента",
+      "price": 8337.0,
+      "pic1": "bouquets/pion_bouquet_25.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 101 бордового пиона (Премиум)",
+      "consists": "Состав букета: пион 101, упаковка, лента",
+      "price": 58695.0,
+      "pic1": "bouquets/pion_bouquet_26.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 15 пионов микс (Премиум)",
+      "consists": "Состав букета: пион 15, упаковка, лента",
+      "price": 11235.0,
+      "pic1": "bouquets/pion_bouquet_27.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 15 бордовых пионов (Премиум)",
+      "consists": "Состав букета: пион 15, упаковка, лента",
+      "price": 11235.0,
+      "pic1": "bouquets/pion_bouquet_28.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 11 бордовых пионов (Премиум)",
+      "consists": "Состав букета: пион 11, упаковка, лента",
+      "price": 8337.0,
+      "pic1": "bouquets/pion_bouquet_29.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  },
+  {
+    "model": "catalog.bouquet",
+    "pk": null,
+    "fields": {
+      "name": "Букет из 19 бордовых пионов (Премиум)",
+      "consists": "Состав букета: пион 19, упаковка, лента",
+      "price": 11339.0,
+      "pic1": "bouquets/pion_bouquet_30.jpg",
+      "pic2": "",
+      "is_bestseller": false
+    }
+  }
+]

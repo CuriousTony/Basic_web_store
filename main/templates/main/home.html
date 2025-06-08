@@ -1,0 +1,266 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block title %}Главная страница | Цветочная Палитра{% endblock %}
+
+{% block content %}
+<div class="container mt-1">
+    <!-- Карусель -->
+    <div id="mainCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+        <div class="carousel-inner rounded-3">
+            {% for i in "1234" %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{% static 'main/img/promo'|add:i|add:'.jpg' %}"
+                     class="d-block w-100"
+                     alt="Акция {{ i }}"
+                     style="max-height: 500px; object-fit: cover;">
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Хиты месяца -->
+    <h2 class="text-center mb-4">Хиты месяца:</h2>
+    <div class="row g-4 mb-5">
+        {% for bouquet in bestsellers|slice:":4" %}
+        <div class="col-md-3">
+            <div class="card h-100 shadow-sm hover-effect">
+                {% if bouquet.pic1 %}
+                    <img src="{{ bouquet.pic1.url }}"
+                         class="card-img-top"
+                         alt="{{ bouquet.name }}"
+                         style="height: 250px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ bouquet.name }}</h5>
+                    <div class="mb-2 flex-grow-1">
+                        <p class="card-text small text-secondary text-truncate-3-lines">
+                            {{ bouquet.consists }}
+                        </p>
+                    </div>
+                    <div class="fixed-bottom-block">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-success">{{ bouquet.average_rating|floatformat:1 }} ★</span>
+                            <h5 class="text-muted m-0">{{ bouquet.price }} ₽</h5>
+                        </div>
+                        <div class="buy-control text-center">
+                            <div class="buy-actions position-relative">
+                                <button class="btn btn-success btn-sm cart-add w-100"
+                                        data-bouquet-id="{{ bouquet.id }}">
+                                    <i class="bi bi-cart"></i> Купить
+                                </button>
+                                <div class="quantity-selector d-none bg-white p-2 rounded shadow-sm">
+                                    <div class="input-group input-group-sm">
+                                        <button class="btn btn-outline-secondary decrement">-</button>
+                                        <input type="number" value="1"
+                                               class="form-control text-center"
+                                               min="1"
+                                               style="width: 50px;">
+                                        <button class="btn btn-outline-secondary increment">+</button>
+                                    </div>
+                                    <button class="btn btn-success btn-sm confirm-add mt-2">
+                                        <i class="bi bi-check-lg"></i> Подтвердить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <div class="alert alert-warning">Популярные букеты появятся здесь совсем скоро!</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Все букеты -->
+    <h2 class="text-center mb-4">Все букеты</h2>
+    <div class="row g-4">
+        {% for bouquet in bouquets %}
+        <div class="col-md-3">
+            <div class="card h-100 shadow-sm hover-effect">
+                {% if bouquet.pic1 %}
+                    <img src="{{ bouquet.pic1.url }}"
+                         class="card-img-top"
+                         alt="{{ bouquet.name }}"
+                         style="height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ bouquet.name }}</h5>
+                    <div class="mb-2 flex-grow-1">
+                        <p class="card-text small text-secondary text-truncate-3-lines">
+                            {{ bouquet.consists }}
+                        </p>
+                    </div>
+                    <div class="fixed-bottom-block">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-success">{{ bouquet.average_rating|floatformat:1 }} ★</span>
+                            <h5 class="text-muted m-0">{{ bouquet.price }} ₽</h5>
+                        </div>
+                        <div class="buy-control text-center">
+                            <div class="buy-actions position-relative">
+                                <button class="btn btn-success btn-sm cart-add w-100"
+                                        data-bouquet-id="{{ bouquet.id }}">
+                                    <i class="bi bi-cart"></i> Купить
+                                </button>
+                                <div class="quantity-selector d-none bg-white p-2 rounded shadow-sm">
+                                    <div class="input-group input-group-sm">
+                                        <button class="btn btn-outline-secondary decrement">-</button>
+                                        <input type="number" value="1"
+                                               class="form-control text-center"
+                                               min="1"
+                                               style="width: 50px;">
+                                        <button class="btn btn-outline-secondary increment">+</button>
+                                    </div>
+                                    <button class="btn btn-success btn-sm confirm-add mt-2">
+                                        <i class="bi bi-check-lg"></i> Подтвердить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <div class="alert alert-info">Букеты появятся здесь совсем скоро!</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img id="modalBouquetImage" src="" class="img-fluid rounded mb-3" style="max-height: 150px;">
+                <h5 id="modalBouquetName" class="mb-2"></h5>
+                <p id="modalBouquetConsists" class="small text-muted mb-2"></p>
+                <p id="modalBouquetPrice" class="h5 text-success mb-4"></p>
+                <div class="d-flex justify-content-center gap-3">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+                        Продолжить покупки
+                    </button>
+                    <a href="{% url 'cart:cart_detail' %}" class="btn btn-success btn-sm">
+                        Перейти в корзину
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    // Обработчики для кнопок "Купить"
+    document.querySelectorAll('.cart-add').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const selector = this.nextElementSibling;
+            selector.classList.toggle('d-none');
+        });
+    });
+
+    // Управление количеством товара
+    document.addEventListener('click', function(e) {
+        const card = e.target.closest('.card');
+
+        if (e.target.classList.contains('increment')) {
+            const input = card.querySelector('input[type="number"]');
+            input.value = parseInt(input.value) + 1;
+        }
+
+        if (e.target.classList.contains('decrement')) {
+            const input = card.querySelector('input[type="number"]');
+            if (input.value > 1) input.value = parseInt(input.value) - 1;
+        }
+    });
+
+    // Обработка подтверждения добавления в корзину
+    document.addEventListener('click', async function(e) {
+        if (!e.target.closest('.confirm-add')) return;
+
+        const selector = e.target.closest('.quantity-selector');
+        const bouquetId = selector.previousElementSibling.dataset.bouquetId;
+        const quantity = selector.querySelector('input').value;
+
+        try {
+            const response = await fetch(`{% url 'cart:add_to_cart' 0 %}`.replace('0', bouquetId), {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `quantity=${quantity}`
+            });
+
+            if (response.status === 403) {
+                window.location.href = "{% url 'users:signin' %}?next={{ request.path }}";
+                return;
+            }
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                selector.classList.add('d-none');
+                updateCartCounter(data.total_items);
+
+                // Управление модальным окном
+                const modalElement = document.getElementById('cartModal');
+                const existingModal = bootstrap.Modal.getInstance(modalElement);
+
+                if (existingModal) {
+                    existingModal.hide();
+                    existingModal.dispose();
+                }
+
+                // Обновление содержимого модалки
+                document.getElementById('modalBouquetName').textContent = data.bouquet_name;
+                document.getElementById('modalBouquetConsists').textContent = data.bouquet_consists;
+                document.getElementById('modalBouquetPrice').textContent = `${data.bouquet_price} ₽`;
+                document.getElementById('modalBouquetImage').src = data.bouquet_image_url;
+
+                // Создание новой модалки
+                const cartModal = new bootstrap.Modal(modalElement, {
+                    backdrop: true,
+                    keyboard: true
+                });
+                cartModal.show();
+            }
+        } catch (error) {
+            console.error('Ошибка добавления в корзину:', error);
+            showAlert('Ошибка добавления в корзину', 'danger');
+            selector.classList.add('d-none');
+        }
+    });
+
+    // Вспомогательные функции
+    function showAlert(message, type) {
+        const alert = document.createElement('div');
+        alert.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+        alert.style = 'top: 20px; right: 20px; z-index: 9999;';
+        alert.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        document.body.appendChild(alert);
+        setTimeout(() => alert.remove(), 3000);
+    }
+
+    function updateCartCounter(count) {
+        const counter = document.querySelector('.cart-counter');
+        if (counter) counter.textContent = count;
+    }
+});
+</script>
+{% endblock %}

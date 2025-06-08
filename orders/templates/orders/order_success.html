@@ -1,0 +1,11 @@
+{% extends 'main/layout.html' %}
+{% block content %}
+<div class="container py-4">
+    <div class="alert alert-success text-center">
+        <h2>Оплата прошла успешно!</h2>
+        <p>Номер заказа: #{{ order.id }}</p>
+        <p>Статус: {{ order.get_status_display }}</p>
+        <a href="{% url 'main:home' %}" class="btn btn-primary">На главную</a>
+    </div>
+</div>
+{% endblock %}

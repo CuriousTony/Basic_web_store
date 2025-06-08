@@ -1,0 +1,88 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block content %}
+<div class="container py-4">
+    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Оплата заказа</h2>
+            <form method="post" action="{% url 'orders:process_payment' order.id %}" id="paymentForm">
+                {% csrf_token %}
+
+                <!-- Блок оплаты -->
+                <div class="mb-3">
+                    <label class="form-label">Номер карты</label>
+                    <input type="text" class="form-control" name="card_number" placeholder="Учебный проект - поле необязательное.">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Срок действия карты</label>
+                    <input type="text" class="form-control" name="card_expiry" placeholder="Можно оставить пустым.">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">CVV</label>
+                    <input type="text" class="form-control" name="card_cvv" placeholder="Можно оставить пустым.">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Имя владельца карты</label>
+                    <input type="text" class="form-control" name="card_holder" placeholder="Можно оставить пустым.">
+                </div>
+
+                <!-- Информация о заказе -->
+                <div class="mb-3">
+                    <h4>Информация о заказе</h4>
+                    <p>Имя заказчика: {{ order.user.name }}</p>
+                    <p>Телефон заказчика: {{ order.user.phone }}</p>
+
+                    {% if order.delivery_type == 'delivery' %}
+                        {% if order.recipient %}
+                            <p>Имя получателя: {{ order.recipient.name }}</p>
+                            <p>Телефон получателя: {{ order.recipient.phone }}</p>
+                            <p>Адрес доставки: {{ order.recipient.address }}</p>
+                        {% else %}
+                            <p>Адрес доставки: {{ order.delivery_address }}</p>
+                        {% endif %}
+                        <p>Дата доставки: {{ order.delivery_date|date:"d.m.Y H:i" }}</p>
+                    {% else %}
+                        <p>Способ получения: Самовывоз</p>
+                        <p>Адрес магазина: Лиговский пр., 99</p>
+                    {% endif %}
+
+                    <h5 class="mt-4">Детали заказа:</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Букет</th>
+                                <th>Количество</th>
+                                <th>Цена за шт.</th>
+                                <th>Итого</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items.all %}
+                                <tr>
+                                    <td>{{ item.bouquet.name }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>{{ item.price }} руб.</td>
+                                    <td>{{ item.quantity|floatformat:0 }} × {{ item.price }} = {% widthratio item.quantity 1 item.price %} руб.</td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center">Нет товаров в заказе</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="h5 text-end mt-3">
+                        Итоговая сумма: {{ order.total_price }} руб.
+                    </div>
+                </div>
+
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        Оплатить <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

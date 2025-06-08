@@ -1,0 +1,140 @@
+<style>
+.cart-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 15px;
+    --image-width: 140px;
+    --control-height: 38px;
+}
+
+.cart-item.card {
+    max-width: 800px;
+    min-height: auto;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0.3rem;
+    border-radius: 12px;
+    overflow: hidden;
+    transition:
+        box-shadow 0.2s,
+        transform 0.3s !important;
+}
+
+.cart-item-controls {
+    gap: 1rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 500px;
+}
+
+.cart-item-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.cart-item.card:hover {
+    box-shadow: 0 0.5rem 1.2rem rgba(0, 0, 0, 0.08) !important;
+    transform: translateY(-3px); /* Перенесено из старого CSS */
+}
+
+.card-img-container {
+    padding: 0.5rem;
+    min-width: var(--image-width);
+    max-width: var(--image-width);
+    display: flex;
+    align-items: center;
+}
+
+.card-img-container img {
+    width: 100%;
+    height: var(--image-width) !important;
+    object-fit: cover; /* Сохранено из старого CSS */
+    border-radius: 8px !important;
+}
+
+.remove-item {
+    transition:
+        transform 0.2s,
+        opacity 0.2s !important; /* Расширили анимацию */
+}
+
+.remove-item:hover {
+    transform: scale(1.2);
+    opacity: 0.9;
+}
+
+.quantity-control {
+    flex-shrink: 0;
+    max-width: 110px;
+}
+
+.quantity-control .btn {
+    width: 25px !important;
+    height: var(--control-height);
+    padding: 0 5px;
+    line-height: 1;
+    transition: background-color 0.2s;
+}
+
+.summary-card {
+    min-height: auto;
+}
+
+.summary-card .btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.2rem;
+}
+
+.order-container {
+    max-width: 1200px;
+}
+
+.order-summary {
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    position: sticky;
+    top: 20px;
+}
+
+.form-floating {
+    margin-bottom: 1.2rem;
+}
+
+.form-check {
+    padding-left: 2.5em;
+}
+
+.form-check-input {
+    width: 1.2em;
+    height: 1.2em;
+    margin-left: -2.5em;
+}
+
+@media (max-width: 992px) {
+    .order-summary {
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-img-container {
+        max-width: 100% !important;
+        min-width: 100% !important;
+    }
+
+    .card-img-container img {
+        height: 140px !important;
+    }
+
+    .cart-item-title {
+        font-size: 1rem !important;
+    }
+
+    .cart-item-price {
+        font-size: 1.1rem !important;
+    }
+}
+</style>

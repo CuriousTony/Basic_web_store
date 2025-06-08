@@ -1,0 +1,32 @@
+{% extends 'main/layout.html' %}
+{% block title %}Мои заказы{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h4 class="mb-4">История заказов</h4>
+
+    {% for order in orders %}
+        <div class="order-list-card mb-3 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="card-title mb-1">Заказ #{{ order.id }}</h5>
+                        <small class="text-muted">
+                            {{ order.created_at|date:"d.m.Y H:i" }} |
+                            Статус: <span class="badge bg-secondary">{{ order.get_status_display }}</span>
+                        </small>
+                    </div>
+                    <a
+                        href="{% url 'orders:order_details' order.id %}"
+                        class="btn btn-outline-primary btn-sm"
+                    >
+                        Подробнее →
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="alert alert-info">У вас пока нет заказов.</div>
+    {% endfor %}
+</div>
+{% endblock %}
