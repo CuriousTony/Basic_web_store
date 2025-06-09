@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from cart.utils import get_or_create_cart
+from cart.models import Cart, CartItem
 from .forms import OrderCreateForm
 from .models import Order, OrderItem
 from users.models import Recipient
@@ -114,3 +115,24 @@ def order_list(request):
 def order_details(request, order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user)
     return render(request, 'orders/order_details.html', {'order': order})
+
+
+def repeat_order(request, order_id):
+    if request.method == 'POST':
+        old_order = get_object_or_404(Order, id=order_id, user=request.user)
+        cart, created = Cart.objects.get_or_create(user=request.user)
+
+        for item in old_order.items.all():
+            cart_item, created = CartItem.objects.get_or_create(
+                cart=cart,
+                bouquet=item.bouquet,
+                defaults={'quantity': item.quantity, 'price': item.bouquet.price}
+            )
+            if not created:
+                cart_item.quantity += item.quantity
+                cart_item.save()
+
+        messages.success(request, 'Товары из заказа добавлены в корзину. Пожалуйста, завершите оформление заказа.')
+        return redirect('orders:order_create')
+
+    return redirect('orders:order_list')

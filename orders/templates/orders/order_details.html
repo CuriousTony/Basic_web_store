@@ -37,7 +37,7 @@
                         <div class="row">
                             <!-- Фото букета -->
                             <div class="col-md-3">
-                                {% if item.bouquet.pic1 %}  <!-- Проверка перед отображением -->
+                                {% if item.bouquet.pic1 %}
                                 <img src="{{ item.bouquet.pic1.url }}"
                                      alt="{{ item.bouquet.name }}"
                                      class="img-fluid rounded"
@@ -68,7 +68,6 @@
                                         {{ item.price }} ₽
                                     </div>
                                 </div>
-
                                 <!-- Блок отзыва -->
                                 {% if order.status == 'completed' %}
                                     <div class="mt-3 border-top pt-2">

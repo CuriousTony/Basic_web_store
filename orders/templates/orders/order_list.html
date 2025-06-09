@@ -16,12 +16,18 @@
                             Статус: <span class="badge bg-secondary">{{ order.get_status_display }}</span>
                         </small>
                     </div>
-                    <a
-                        href="{% url 'orders:order_details' order.id %}"
-                        class="btn btn-outline-primary btn-sm"
-                    >
-                        Подробнее →
-                    </a>
+                    <div class="d-flex align-items-center gap-2">
+                        <a
+                            href="{% url 'orders:order_details' order.id %}"
+                            class="btn btn-outline-primary btn-sm"
+                        >
+                            Подробнее →
+                        </a>
+                        <form action="{% url 'orders:repeat_order' order.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success btn-sm">Повторить заказ</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
