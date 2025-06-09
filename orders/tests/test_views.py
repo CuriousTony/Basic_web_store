@@ -1,5 +1,5 @@
 from unittest import mock
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.utils import timezone
@@ -121,3 +121,71 @@ class OrderCreateViewTest(TestCase):
         self.assertEqual(Recipient.objects.count(), 0, "Получатель не должен быть создан")
         self.assertTrue(Cart.objects.filter(user=self.user).exists(), "Корзина должна остаться")
         self.assertIn("Ошибка при оформлении заказа", response.content.decode())
+
+
+class RepeatOrderViewTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            name='tester',
+            phone='+79991112233',
+            password='testpass'
+        )
+
+        self.bouquet = Bouquet.objects.create(
+            name='Тестовый букет',
+            consists='Розы, лилии',
+            price=1000,
+            cost_price=700
+        )
+
+        self.order = Order.objects.create(
+            user=self.user,
+            total_price=1000.00,
+            delivery_date=timezone.now() + timedelta(hours=3),
+            status='completed'
+        )
+
+        OrderItem.objects.create(
+            order=self.order,
+            bouquet=self.bouquet,
+            quantity=2,
+            price=1000
+        )
+
+        self.client = Client()
+        self.client.login(phone='+79991112233', password='testpass')
+
+    def test_repeat_order(self):
+        response = self.client.post(reverse('orders:repeat_order', args=[self.order.id]))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('orders:order_create'))
+
+        cart = Cart.objects.get(user=self.user)
+        cart_items = cart.items.all()
+
+        self.assertEqual(cart_items.count(), 1)
+        cart_item = cart_items.first()
+        self.assertEqual(cart_item.bouquet, self.bouquet)
+        self.assertEqual(cart_item.quantity, 2)
+        self.assertEqual(cart_item.price, 1000)
+
+    def test_repeat_order_creates_new_cart_if_not_exists(self):
+        # Убедимся, что корзина отсутствует
+        # self.assertFalse(Cart.objects.filter(user=self.user).exists())
+        self.client.post(reverse('orders:repeat_order', args=[self.order.id]))
+        cart = Cart.objects.get(user=self.user)
+        self.assertIsNotNone(cart)
+
+    def test_repeat_order_increases_quantity_if_item_exists(self):
+        cart = Cart.objects.get(user=self.user)
+        CartItem.objects.create(
+            cart=cart,
+            bouquet=self.bouquet,
+            quantity=1,
+            price=1000.00
+        )
+
+        self.client.post(reverse('orders:repeat_order', args=[self.order.id]))
+        cart_item = CartItem.objects.get(cart=cart, bouquet=self.bouquet)
+        self.assertEqual(cart_item.quantity, 3)
